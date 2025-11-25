@@ -1,6 +1,6 @@
 from typing import Optional
 from datetime import datetime
-from sqlalchemy import DateTime, ForeignKey
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.orm import Mapped, mapped_column
 from .enums import PullRequestStatus
@@ -41,7 +41,7 @@ class UserOrm(Base):
     reviewing_pull_requests: Mapped[Optional[list["PullRequestOrm"]]] = \
         relationship(
             "ReviewersOrm",
-            back_populates="user_id",
+            backref="user",
             lazy="select"
         )
 
@@ -71,6 +71,6 @@ class PullRequestOrm(Base):
     merged_at: Mapped[Optional[datetime]] = mapped_column()
     assigned_reviewers = relationship(
         "ReviewersOrm",
-        back_populates="pull_request_id",
+        backref="pull_request",
         lazy="select"
     )
