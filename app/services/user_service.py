@@ -25,7 +25,7 @@ class UserService:
         await db.commit()
         await db.refresh(user_orm)
 
-        return UserOrm.from_orm(user_orm)
+        return UserModel.from_orm(user_orm)
 
     @staticmethod
     async def set_is_active(

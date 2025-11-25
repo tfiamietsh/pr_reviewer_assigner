@@ -58,7 +58,7 @@ class PullRequestService:
         await db.commit()
         await db.refresh(pr_orm)
 
-        return PullRequestOrm.from_orm(pr_orm), None
+        return PullRequestShortModel.from_orm(pr_orm), None
 
     @staticmethod
     async def merge(
