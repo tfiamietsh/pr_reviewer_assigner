@@ -22,7 +22,10 @@ async def create_pr(
             raise HTTPException(status_code=409, detail=error.value)
         else:
             raise HTTPException(status_code=404, detail=error.value)
-    return JSONResponse(content=pr, status_code=201)
+    return JSONResponse(
+        content=pr.model_dump(mode="json"),
+        status_code=201
+    )
 
 
 @router.post("/merge")
@@ -37,7 +40,7 @@ async def merge_pr(
             status_code=404,
             detail=Error.PR_NOT_FOUND.value
         )
-    return JSONResponse(content=pr)
+    return JSONResponse(content=pr.model_dump(mode="json"))
 
 
 @router.post("/reassign")
@@ -55,4 +58,4 @@ async def reassign_pr(
             raise HTTPException(status_code=404, detail=error.value)
         else:
             raise HTTPException(status_code=409, detail=error.value)
-    return JSONResponse(content=pr)
+    return JSONResponse(content=pr.model_dump(mode="json"))

@@ -19,7 +19,10 @@ async def add_team(
 
     if team is None:
         raise HTTPException(status_code=400, detail=Error.TEAM_EXISTS.value)
-    return JSONResponse(content=team, status_code=201)
+    return JSONResponse(
+        content=team.model_dump(mode="json"),
+        status_code=201
+    )
 
 
 @router.get("/get")
@@ -34,4 +37,4 @@ async def get_team(
             status_code=404,
             detail=Error.TEAM_NOT_FOUND.value
         )
-    return JSONResponse(content=team)
+    return JSONResponse(content=team.model_dump(mode="json"))
