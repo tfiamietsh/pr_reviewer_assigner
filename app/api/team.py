@@ -18,7 +18,10 @@ async def add_team(
     team = await TeamService.add(db, team)
 
     if team is None:
-        raise HTTPException(status_code=400, detail=Error.TEAM_EXISTS.value)
+        raise HTTPException(
+            status_code=400,
+            detail=Error.TEAM_EXISTS.details
+        )
     return JSONResponse(
         content=team.model_dump(mode="json"),
         status_code=201
@@ -35,6 +38,6 @@ async def get_team(
     if team is None:
         raise HTTPException(
             status_code=404,
-            detail=Error.TEAM_NOT_FOUND.value
+            detail=Error.TEAM_NOT_FOUND.details
         )
     return JSONResponse(content=team.model_dump(mode="json"))

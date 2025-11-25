@@ -18,7 +18,10 @@ async def add_user(
     user = await UserService.add(db, user)
 
     if user is None:
-        raise HTTPException(status_code=400, detail=Error.USER_EXISTS.value)
+        raise HTTPException(
+            status_code=400,
+            detail=Error.USER_EXISTS.details
+        )
     return JSONResponse(
         content=user.model_dump(mode="json"),
         status_code=201
@@ -36,7 +39,7 @@ async def set_user_is_active(
     if user is None:
         raise HTTPException(
             status_code=400,
-            detail=Error.USER_NOT_FOUND.value
+            detail=Error.USER_NOT_FOUND.details
         )
     return JSONResponse(
         content=user.model_dump(mode="json"),
@@ -54,6 +57,6 @@ async def get_reviewing_prs(
     if result is None:
         raise HTTPException(
             status_code=404,
-            detail=Error.USER_NOT_FOUND.value
+            detail=Error.USER_NOT_FOUND.details
         )
     return JSONResponse(content=result.model_dump(mode="json"))

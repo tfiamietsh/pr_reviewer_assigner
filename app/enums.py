@@ -18,3 +18,7 @@ class Error(Enum):
     AUTHOR_NOT_FOUND = "Автор не найден"
     PR_NOT_FOUND = "PR не найден"
     REVIEWER_NOT_FOUND = "Ревьювер не найден"
+
+    @property
+    def details(self) -> dict[str, str]:
+        return {"code": self.name, "message": self.value}

@@ -19,9 +19,9 @@ async def create_pr(
 
     if pr is None:
         if error == Error.PR_EXISTS:
-            raise HTTPException(status_code=409, detail=error.value)
+            raise HTTPException(status_code=409, detail=error.details)
         else:
-            raise HTTPException(status_code=404, detail=error.value)
+            raise HTTPException(status_code=404, detail=error.details)
     return JSONResponse(
         content=pr.model_dump(mode="json"),
         status_code=201
@@ -38,7 +38,7 @@ async def merge_pr(
     if pr is None:
         raise HTTPException(
             status_code=404,
-            detail=Error.PR_NOT_FOUND.value
+            detail=Error.PR_NOT_FOUND.details
         )
     return JSONResponse(content=pr.model_dump(mode="json"))
 
@@ -55,7 +55,7 @@ async def reassign_pr(
 
     if pr is None:
         if error == Error.PR_NOT_FOUND or error == Error.USER_NOT_FOUND:
-            raise HTTPException(status_code=404, detail=error.value)
+            raise HTTPException(status_code=404, detail=error.details)
         else:
-            raise HTTPException(status_code=409, detail=error.value)
+            raise HTTPException(status_code=409, detail=error.details)
     return JSONResponse(content=pr.model_dump(mode="json"))
